@@ -18,11 +18,12 @@ public class ComputerScreenClick : MonoBehaviour
     {
         computerText.text = "Press Start to";
         computerText.gameObject.SetActive(true);
-        computerButton.gameObject.SetActive(false);
+        // computerButton.gameObject.SetActive(false);
 
     }
     public void OnClick()
     {
+        SliderScript.instance.CancelSlider();
         clickedAmount++;
         if (clickedAmount == 5)
         {
@@ -68,6 +69,7 @@ public class ComputerScreenClick : MonoBehaviour
         {
             //call end game screen
             Debug.Log("End game screen should be called here.");
+            Debug.Log("Pesky Button Ending");
             EndScreenScript.instance.ShowEndScreen(0); // Example usage, replace 0 with the desired ending index
         }
         buttonClickedAmount++;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 064f0967387b2ac4e8c2921686030b96
+guid: f37827a4049e8264b8e9927ea8e9a2d8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Temp 1_0
+      name: Temp_0
       rect:
         serializedVersion: 2
-        x: 2232
-        y: 145
-        width: 1289
-        height: 293
+        x: 0
+        y: 0
+        width: 5760
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +137,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f7bf14ad0ee9bf4096d5a251a211e1f
-      internalID: -1418423283
+      spriteID: b0370d64c7e07bb428112cf435f8d509
+      internalID: -1782740990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp_1
+      rect:
+        serializedVersion: 2
+        x: 2132
+        y: 0
+        width: 1520
+        height: 438
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70273ff9ae0f5e140a35118203016f3d
+      internalID: 407600137
       vertices: []
       indices: 
       edges: []
@@ -154,7 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Temp 1_0: -1418423283
+      Temp_0: -1782740990
+      Temp_1: 407600137
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

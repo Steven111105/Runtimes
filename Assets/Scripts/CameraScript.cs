@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour
 {
@@ -44,15 +45,18 @@ public class CameraScript : MonoBehaviour
 
     private IEnumerator MoveCamera(int index)
     {
+        SliderScript.instance.CancelSlider();
         canMoveCamera = false; // Prevent further camera movement until the current move is complete
-        Vector3 targetPosition = new Vector3(index * 1920f, 0, -10f); // Adjust the position based on index
+        Vector2 startPosition = transform.localPosition;
+        Vector2 targetPosition = new Vector2(index * 1920f, 0); // Adjust the position based on index
         float elapsedTime = 0f;
         float duration = 1f;
 
         Debug.Log("Moving cam");
         while (elapsedTime < duration)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, elapsedTime / duration);
+            float t = elapsedTime / duration;
+            transform.localPosition = Vector2.Lerp(startPosition, targetPosition, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
