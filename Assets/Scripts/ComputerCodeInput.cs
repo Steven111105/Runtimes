@@ -10,6 +10,7 @@ public class ComputerCodeInput : MonoBehaviour
     public GameObject screen1GameObject;
     public GameObject screen2GameObject;
 
+
     [Header("Passwords")]
     public string[] passwords = new string[3]; // Array of 3 possible passwords
 
@@ -128,6 +129,7 @@ public class ComputerCodeInput : MonoBehaviour
     {
         // Debug.Log($"Key pressed: {key}, Button: {buttonTransform.name}");
         if (hasAccess) return; // Prevent input if access is granted
+        SoundInstance.Instance.PlayKeyboard();
         // Check if it's a special key
         if (key == "BACKSPACE")
         {
@@ -213,6 +215,7 @@ public class ComputerCodeInput : MonoBehaviour
                     Debug.Log("Anagrams password ");
                     break;
                 case "RUNTIMES":
+                    Debug.Log("Runtimes password ");
                     KeyCabinetScript.instance.OpenKeyCabinet(); // Open key cabinet UI
                     break;
                 case "TERMINUS":
@@ -237,6 +240,7 @@ public class ComputerCodeInput : MonoBehaviour
             else
             {
                 Debug.Log("Too Many Attempts Ending");
+                ShowFeedback($"0 attempts left, Neutralizing user", false);
                 EndScreenScript.instance.ShowEndScreen(3); // Show locked screen
             }
         }

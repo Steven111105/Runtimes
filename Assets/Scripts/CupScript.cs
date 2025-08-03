@@ -25,6 +25,7 @@ public class CupScript : MonoBehaviour
     public void DrinkTea()
     {
         if (!isFilled) return;
+        SoundInstance.Instance.PlayDrinking(); // Play drinking sound
         Debug.Log("Tea Time Ending");
         EndScreenScript.instance.ShowEndScreen(0); // Show the end screen with index 1 for drinking tea
     }

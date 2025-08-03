@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyCabinetScript : MonoBehaviour
@@ -8,14 +6,7 @@ public class KeyCabinetScript : MonoBehaviour
     public GameObject key; // Reference to the key cabinet UI
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
     // Start is called before the first frame update
     void Start()
@@ -26,21 +17,15 @@ public class KeyCabinetScript : MonoBehaviour
 
     public void OpenKeyCabinet()
     {
+        SoundInstance.Instance.PlayDrawer();
         gameObject.SetActive(true); // Show the key cabinet UI
         key.SetActive(true); // Show the key
     }
 
     public void GetKey()
     {
+        SoundInstance.Instance.PlayGetKey(); // Play the sound for getting the key
         key.SetActive(false); // Hide the key after it has been taken
         DoorScript.instance.hasKey = true; // Set the door script to indicate the key has been taken
-    }
-    
-    void OnDestroy()
-    {
-        if (instance == this)
-        {
-            instance = null; // Clear the instance if this is the one being destroyed
-        }
     }
 }

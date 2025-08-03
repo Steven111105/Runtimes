@@ -24,6 +24,7 @@ public class DoorScript : MonoBehaviour
     {
         if (hasKey)
         {
+            SoundInstance.Instance.PlayDoorUnlocked(); // Play door unlocked sound
             Debug.Log("Door opened!");
             Debug.Log("Runtimes Ending");
             EndScreenScript.instance.ShowEndScreen(5); // Show the end screen if the door is opened
@@ -31,6 +32,7 @@ public class DoorScript : MonoBehaviour
         }
         else
         {
+            SoundInstance.Instance.PlayDoorLocked(); // Play door locked sound
             Debug.Log("You need a key to open this door.");
         }
     }

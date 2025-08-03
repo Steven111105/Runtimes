@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InteractableObject))]
 public class ComputerScreenClick : MonoBehaviour
 {
     public int clickedAmount = 0;
@@ -19,14 +18,13 @@ public class ComputerScreenClick : MonoBehaviour
     {
         computerText.text = "Press Start to";
         computerText.gameObject.SetActive(true);
-        computerButton.gameObject.SetActive(false);
-        computerButton.transform.localPosition = Vector2.zero;
         // computerButton.gameObject.SetActive(false);
 
     }
     public void OnClick()
     {
         SliderScript.instance.CancelSlider();
+        SoundInstance.Instance.PlayClick(); // Play click sound
         clickedAmount++;
         if (clickedAmount == 5)
         {

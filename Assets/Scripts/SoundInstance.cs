@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundInstance : MonoBehaviour
@@ -22,6 +20,7 @@ public class SoundInstance : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Keep between scenes
+            DontDestroyOnLoad(sfxSource.gameObject); // Keep AudioSource between scenes
         }
         else
         {

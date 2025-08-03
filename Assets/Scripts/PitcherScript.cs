@@ -136,6 +136,7 @@ public class PitcherScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OnDroppedOnTarget()
     {
+        SoundInstance.Instance.PlayPouring(); // Play pouring sound
         targetImage.GetComponent<CupScript>().FillCup(); // Assuming CupScript has a property to mark it as filled
     }
     
