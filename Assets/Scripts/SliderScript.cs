@@ -54,7 +54,7 @@ public class SliderScript : MonoBehaviour
             slider.value -= Time.deltaTime;
             yield return null;
         }
-        Debug.Log("Tired Already? Ending");
-        EndScreenScript.instance.ShowEndScreen(2);
+        Debug.Log("You Did Nothing Ending");
+        EndScreenScript.instance.ShowEndScreen(4);
     }
 }

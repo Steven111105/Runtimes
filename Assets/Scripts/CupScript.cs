@@ -26,6 +26,6 @@ public class CupScript : MonoBehaviour
     {
         if (!isFilled) return;
         Debug.Log("Tea Time Ending");
-        EndScreenScript.instance.ShowEndScreen(1); // Show the end screen with index 1 for drinking tea
+        EndScreenScript.instance.ShowEndScreen(0); // Show the end screen with index 1 for drinking tea
     }
 }

@@ -9,6 +9,7 @@ public class EndScreenScript : MonoBehaviour
 {
     public EndScreenData[] endingsData;
     public static EndScreenScript instance;
+    public GameObject blockInputPanel;
     public TMP_Text endScreenLoreText;
     public TMP_Text endingText;
     public Button restartButton;
@@ -19,6 +20,7 @@ public class EndScreenScript : MonoBehaviour
         {
             instance = this;
             endScreenBG = GetComponent<Image>();
+            blockInputPanel.SetActive(false);
         }
         else
         {
@@ -85,6 +87,11 @@ public class EndScreenScript : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void BlockInput()
+    {
+        blockInputPanel.SetActive(true);
     }
     
     private void OnDestroy()

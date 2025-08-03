@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ComputerCodeInput : MonoBehaviour
@@ -15,6 +16,7 @@ public class ComputerCodeInput : MonoBehaviour
     [Header("UI Elements")]
     public Transform inputBoxParent; // Parent object containing the 8 input boxes
     public TextMeshProUGUI feedbackText; // TextMeshPro to show success/error messages
+    public Transform keyboardParent; // Parent object containing the keyboard rows
 
     [Header("Settings")]
     public int maxPasswordLength = 8;
@@ -56,21 +58,62 @@ public class ComputerCodeInput : MonoBehaviour
             
         // Initialize attempts
         attemptsLeft = maxAttempts;
+        
+        // Setup keyboard listeners
+        SetupKeyboardListeners();
     }
-
-    void Update()
+    
+    void SetupKeyboardListeners()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (keyboardParent == null)
         {
-            Backspace();
+            Debug.LogError("Please assign the Keyboard Parent object!");
+            return;
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        
+        // Define the keyboard layout
+        string[] row1Keys = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BACKSPACE"};
+        string[] row2Keys = {"A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTER"};
+        string[] row3Keys = {"Z", "X", "C", "V", "B", "N", "M"};
+        
+        // Get the three row transforms
+        Transform row1 = keyboardParent.GetChild(0);
+        Transform row2 = keyboardParent.GetChild(1);
+        Transform row3 = keyboardParent.GetChild(2);
+        
+        // Setup Row 1 (Q-P + Backspace)
+        SetupRowButtons(row1, row1Keys);
+        
+        // Setup Row 2 (A-L + Enter)
+        SetupRowButtons(row2, row2Keys);
+        
+        // Setup Row 3 (Z-M)
+        SetupRowButtons(row3, row3Keys);
+    }
+    
+    void SetupRowButtons(Transform rowTransform, string[] keys)
+    {
+        for (int i = 0; i < keys.Length && i < rowTransform.childCount; i++)
         {
-            Enter();
-        }
-        else if (Input.anyKeyDown)
-        {
-            Keyboard(Input.inputString.ToUpper());
+            Transform buttonTransform = rowTransform.GetChild(i);
+            Button button = buttonTransform.GetComponent<Button>();
+            
+            if (button != null)
+            {
+                string key = keys[i];
+                
+                // Remove existing listeners to avoid duplicates
+                button.onClick.RemoveAllListeners();
+                
+                // Add the listener for this specific key
+                button.onClick.AddListener(() => Keyboard(key, buttonTransform));
+                
+                // Debug.Log($"Assigned key '{key}' to button {i} in row with name " + buttonTransform.name);
+            }
+            else
+            {
+                Debug.LogWarning($"No Button component found on child {i} of row");
+            }
         }
     }
 
@@ -81,9 +124,10 @@ public class ComputerCodeInput : MonoBehaviour
     }
 
     // Called when any keyboard button is clicked
-    public void Keyboard(string key)
+    public void Keyboard(string key, Transform buttonTransform)
     {
-        if(hasAccess) return; // Prevent input if access is granted
+        // Debug.Log($"Key pressed: {key}, Button: {buttonTransform.name}");
+        if (hasAccess) return; // Prevent input if access is granted
         // Check if it's a special key
         if (key == "BACKSPACE")
         {
@@ -146,13 +190,15 @@ public class ComputerCodeInput : MonoBehaviour
     {
         // Check against all 3 passwords
         bool passwordCorrect = false;
+        string correctPassword = "";
 
-        foreach (string correctPassword in passwords)
+        foreach (string password in passwords)
         {
-            if (!string.IsNullOrEmpty(correctPassword) &&
-                currentInput.ToUpper() == correctPassword.ToUpper()) // Case insensitive comparison
+            if (!string.IsNullOrEmpty(password) &&
+                currentInput.ToUpper() == password.ToUpper()) // Case insensitive comparison
             {
                 passwordCorrect = true;
+                correctPassword = password;
                 break;
             }
         }
@@ -161,7 +207,21 @@ public class ComputerCodeInput : MonoBehaviour
         {
             ShowFeedback("ACCESS GRANTED!", true);
             hasAccess = true; // Flag to indicate access granted
-            // Add your success logic here (e.g., unlock something, change scene, etc.)
+            switch (correctPassword)
+            {
+                case "ANAGRAMS":
+                    Debug.Log("Anagrams password ");
+                    break;
+                case "RUNTIMES":
+                    KeyCabinetScript.instance.OpenKeyCabinet(); // Open key cabinet UI
+                    break;
+                case "TERMINUS":
+                    Debug.Log("Terminus password ");
+                    EndScreenScript.instance.BlockInput();
+                    Debug.Log("input blocked");
+                    EndScreenScript.instance.ShowEndScreen(7); // Show terminus screen
+                    break;
+            }
             Debug.Log("Password correct - access granted!");
         }
         else

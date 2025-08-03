@@ -14,8 +14,9 @@ public class SlidePanelScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (content.localPosition.x > -10)
+        if (content.localPosition.x > -922.5f)
         {
+            // Debug.Log(content.localPosition.x);
             ComputerCodeInput.instance.SwitchScreen();
             Destroy(gameObject);
         }
