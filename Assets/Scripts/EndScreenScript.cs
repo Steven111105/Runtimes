@@ -28,16 +28,10 @@ public class EndScreenScript : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ShowEndScreen(0); // Example usage, replace 0 with the desired ending index
-        }
-    }
 
     public void ShowEndScreen(int endingIndex)
     {
+        BlockInput();
         gameObject.SetActive(true);
         StartCoroutine(DisplayEndScreen(endingIndex));
     }

@@ -55,8 +55,13 @@ public class CursorManager : MonoBehaviour
         }
         else
         {
-            // Fallback to system default hover (usually pointing hand)
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            // Use a simple colored cursor as fallback
+            Debug.Log("🖱️ Setting hover cursor (using system default)");
+            // Create a simple cursor texture if none provided
+            if (Application.isPlaying)
+            {
+                CreateSimpleHoverCursor();
+            }
         }
     }
     
@@ -81,5 +86,42 @@ public class CursorManager : MonoBehaviour
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
+    }
+    
+    // Create a simple hover cursor if none is provided
+    private void CreateSimpleHoverCursor()
+    {
+        // Create a simple 32x32 yellow cursor
+        Texture2D simpleCursor = new Texture2D(32, 32, TextureFormat.ARGB32, false);
+        Color[] pixels = new Color[32 * 32];
+        
+        // Simple hand-like pattern
+        for (int y = 0; y < 32; y++)
+        {
+            for (int x = 0; x < 32; x++)
+            {
+                int index = y * 32 + x;
+                
+                // Create a simple pointer shape
+                if ((x >= 8 && x <= 12 && y >= 8 && y <= 24) || // Finger
+                    (x >= 6 && x <= 14 && y >= 20 && y <= 24))   // Palm
+                {
+                    pixels[index] = Color.yellow;
+                }
+                else
+                {
+                    pixels[index] = Color.clear;
+                }
+            }
+        }
+        
+        simpleCursor.SetPixels(pixels);
+        simpleCursor.Apply();
+        
+        hoverCursor = simpleCursor;
+        hoverHotspot = new Vector2(10, 8); // Point at finger tip
+        
+        Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
+        Debug.Log("✅ Created simple hover cursor");
     }
 }

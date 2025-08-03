@@ -5,7 +5,7 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [Header("Cursor Settings")]
     [SerializeField] private bool useCustomHoverCursor = true;
-    [SerializeField] private bool useCustomClickCursor = false;
+    [SerializeField] private bool useCustomClickCursor = true;
     [SerializeField] private Texture2D customHoverCursor;
     [SerializeField] private Texture2D customClickCursor;
     [SerializeField] private Vector2 customHoverHotspot = Vector2.zero;

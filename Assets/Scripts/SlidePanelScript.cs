@@ -18,6 +18,7 @@ public class SlidePanelScript : MonoBehaviour
         {
             // Debug.Log(content.localPosition.x);
             ComputerCodeInput.instance.SwitchScreen();
+            SliderScript.instance.CancelSlider();
             Destroy(gameObject);
         }
     }

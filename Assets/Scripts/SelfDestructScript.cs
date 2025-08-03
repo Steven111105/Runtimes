@@ -22,8 +22,8 @@ public class SelfDestructScript : MonoBehaviour
         amountPressed++;
         if (amountPressed >= 5)
         {
-            Debug.Log("Self Destruct Activated");
-            EndScreenScript.instance.ShowEndScreen(3); // Show the self-destruct ending
+            Debug.Log("Self Destruct Ending");
+            EndScreenScript.instance.ShowEndScreen(1); // Show the self-destruct ending
         }
     }
 }
