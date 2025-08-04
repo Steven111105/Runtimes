@@ -17,14 +17,14 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LookLeft();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            LookRight();
-        }
+        // if (Input.GetKeyDown(KeyCode.LeftArrow))
+        // {
+        //     LookLeft();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.RightArrow))
+        // {
+        //     LookRight();
+        // }
     }
 
     public void LookRight()

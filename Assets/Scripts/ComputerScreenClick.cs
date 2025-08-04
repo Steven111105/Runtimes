@@ -53,7 +53,7 @@ public class ComputerScreenClick : MonoBehaviour
             Debug.Log("Spelling anagram");
             if (buttonClickedAmount == 0)
             {
-                buttonText.text = "A";
+                buttonText.text = "R";
             }
             else
             {

@@ -130,37 +130,51 @@ public class CursorManager : MonoBehaviour
     // Internal methods that actually change the cursor
     private void SetDefaultCursorInternal()
     {
+        // Use ForceSoftware for WebGL to prevent edge cursor issues
+        CursorMode cursorMode = Application.platform == RuntimePlatform.WebGLPlayer ? 
+            CursorMode.ForceSoftware : CursorMode.Auto;
+            
         if (defaultCursor != null)
         {
             try
             {
-                Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+                Cursor.SetCursor(defaultCursor, defaultHotspot, cursorMode);
+                if (enableDebugLogging)
+                    Debug.Log($"Set default cursor with mode: {cursorMode}");
             }
             catch (System.Exception e)
             {
                 Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(null, Vector2.zero, cursorMode);
             }
         }
         else
         {
             // Fallback to system default
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(null, Vector2.zero, cursorMode);
+            if (enableDebugLogging)
+                Debug.Log($"Set system default cursor with mode: {cursorMode}");
         }
     }
     
     private void SetHoverCursorInternal()
     {
+        // Use ForceSoftware for WebGL to prevent edge cursor issues
+        CursorMode cursorMode = Application.platform == RuntimePlatform.WebGLPlayer ? 
+            CursorMode.ForceSoftware : CursorMode.Auto;
+            
         if (hoverCursor != null)
         {
             try
             {
-                Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
+                Cursor.SetCursor(hoverCursor, hoverHotspot, cursorMode);
+                if (enableDebugLogging)
+                    Debug.Log($"Set hover cursor with mode: {cursorMode}");
             }
             catch (System.Exception e)
             {
                 Debug.LogWarning($"Failed to set hover cursor: {e.Message}. Creating simple cursor instead.");
-                CreateSimpleHoverCursor();
+                CreateSimpleHoverCursor(cursorMode);
             }
         }
         else
@@ -168,7 +182,7 @@ public class CursorManager : MonoBehaviour
             // Create a simple cursor texture if none provided
             if (Application.isPlaying)
             {
-                CreateSimpleHoverCursor();
+                CreateSimpleHoverCursor(cursorMode);
             }
         }
     }
@@ -218,7 +232,7 @@ public class CursorManager : MonoBehaviour
     }
     
     // Create a simple hover cursor if none is provided
-    private void CreateSimpleHoverCursor()
+    private void CreateSimpleHoverCursor(CursorMode cursorMode = CursorMode.Auto)
     {
         // Create a simple 32x32 yellow cursor
         Texture2D simpleCursor = new Texture2D(32, 32, TextureFormat.ARGB32, false);
@@ -250,8 +264,9 @@ public class CursorManager : MonoBehaviour
         hoverCursor = simpleCursor;
         hoverHotspot = new Vector2(10, 8); // Point at finger tip
         
-        Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
-        Debug.Log("✅ Created simple hover cursor");
+        Cursor.SetCursor(hoverCursor, hoverHotspot, cursorMode);
+        if (enableDebugLogging)
+            Debug.Log($"✅ Created simple hover cursor with mode: {cursorMode}");
     }
     
     // Simplified watchdog system
