@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     [Header("Cursor Settings")]
-    [SerializeField] private bool useCustomHoverCursor = true;
+    [SerializeField] private bool useCustomHoverCursor = false;
     [SerializeField] private bool useCustomClickCursor = false;
     [SerializeField] private Texture2D customHoverCursor;
     [SerializeField] private Texture2D customClickCursor;
@@ -18,27 +18,18 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         isHovering = true;
         
-        if (CursorManager.instance != null)
+        // Use custom cursor if specified, otherwise let CursorManager handle it automatically
+        if (CursorManager.instance != null && useCustomHoverCursor && customHoverCursor != null)
         {
-            if (useCustomHoverCursor && customHoverCursor != null)
-            {
-                CursorManager.instance.SetCustomCursor(customHoverCursor, customHoverHotspot);
-            }
-            else
-            {
-                CursorManager.instance.SetHoverCursor();
-            }
+            CursorManager.instance.SetCustomCursor(customHoverCursor, customHoverHotspot);
         }
+        // Note: If not using custom cursor, CursorManager's Update() will handle it automatically
     }
     
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
-        
-        if (!isClicking && CursorManager.instance != null)
-        {
-            CursorManager.instance.OnHoverExit();
-        }
+        // Note: CursorManager's Update() will automatically detect we're no longer over this object
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -62,36 +53,15 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         isClicking = false;
         
-        if (CursorManager.instance != null)
-        {
-            if (isHovering)
-            {
-                // Still hovering, go back to hover cursor
-                if (useCustomHoverCursor && customHoverCursor != null)
-                {
-                    CursorManager.instance.SetCustomCursor(customHoverCursor, customHoverHotspot);
-                }
-                else
-                {
-                    CursorManager.instance.SetHoverCursor();
-                }
-            }
-            else
-            {
-                // Not hovering anymore, go back to default
-                CursorManager.instance.OnHoverExit();
-            }
-        }
+        // Let CursorManager's automatic system handle the cursor state
+        // It will detect if we're still hovering and set appropriate cursor
     }
     
     private void OnDisable()
     {
-        // Reset cursor when object is disabled
-        if (isHovering && CursorManager.instance != null)
-        {
-            CursorManager.instance.OnHoverExit();
-        }
+        // Reset state when object is disabled
         isHovering = false;
         isClicking = false;
+        // CursorManager's automatic system will detect the change
     }
 }

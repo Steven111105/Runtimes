@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorManager : MonoBehaviour
 {
@@ -12,11 +13,15 @@ public class CursorManager : MonoBehaviour
     [SerializeField] private Vector2 hoverHotspot = Vector2.zero;
     [SerializeField] private Vector2 clickHotspot = Vector2.zero;
     
+    [Header("Debug & Failsafe")]
+    [SerializeField] private bool enableDebugLogging = false;
+    [SerializeField] private float cursorCheckInterval = 1f;
+    
     public static CursorManager instance;
     
-    // Track how many objects are currently being hovered
-    private int hoverCount = 0;
-    private Coroutine resetCursorCoroutine;
+    // Use Unity's native hover detection
+    private bool isCurrentlyHovering = false;
+    private Coroutine cursorWatchdog;
     
     private void Awake()
     {
@@ -36,74 +41,116 @@ public class CursorManager : MonoBehaviour
     private void Start()
     {
         SetDefaultCursor();
+        // Start the cursor watchdog system (simplified)
+        cursorWatchdog = StartCoroutine(CursorWatchdog());
     }
     
-    public void SetDefaultCursor()
+    private void Update()
     {
-        // Only set default if no objects are being hovered
-        if (hoverCount <= 0)
+        // Reset cursor when application loses focus (Alt+Tab fix)
+        if (!Application.isFocused)
         {
-            if (defaultCursor != null)
+            ResetCursorOnFocusLoss();
+        }
+        
+        // Use Unity's native hover detection
+        CheckUnityHoverState();
+    }
+    
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            ResetCursorOnFocusLoss();
+        }
+    }
+    
+    private void CheckUnityHoverState()
+    {
+        // Use Unity's EventSystem to check if mouse is over any UI
+        bool shouldBeHovering = IsMouseOverInteractableUI();
+        
+        // Only change cursor if state actually changed
+        if (shouldBeHovering != isCurrentlyHovering)
+        {
+            isCurrentlyHovering = shouldBeHovering;
+            
+            if (shouldBeHovering)
             {
-                try
-                {
-                    Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
-                    Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-                }
+                SetHoverCursorInternal();
             }
             else
             {
-                // Fallback to system default
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                SetDefaultCursorInternal();
+            }
+            
+            if (enableDebugLogging)
+                Debug.Log($"Cursor state changed to: {(shouldBeHovering ? "Hovering" : "Default")}");
+        }
+    }
+    
+    private bool IsMouseOverInteractableUI()
+    {
+        var eventSystem = EventSystem.current;
+        if (eventSystem == null) return false;
+        
+        var pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        eventSystem.RaycastAll(pointerEventData, results);
+        
+        // Check if any result has an InteractableObject component or is a Button
+        foreach (var result in results)
+        {
+            if (result.gameObject.GetComponent<InteractableObject>() != null ||
+                result.gameObject.GetComponent<UnityEngine.UI.Button>() != null ||
+                result.gameObject.GetComponent<UnityEngine.UI.Selectable>() != null)
+            {
+                return true;
             }
         }
+        
+        return false;
     }
     
-    // Call this when an object stops being hovered
-    public void OnHoverExit()
+    // Public methods for manual control (legacy support)
+    public void SetDefaultCursor()
     {
-        hoverCount--;
-        
-        // Ensure count doesn't go negative
-        if (hoverCount < 0)
-            hoverCount = 0;
-            
-        // Only reset to default if no objects are being hovered
-        if (hoverCount == 0)
-        {
-            // Add small delay to prevent flickering between overlapping objects
-            resetCursorCoroutine = StartCoroutine(DelayedCursorReset());
-        }
-    }
-    
-    private System.Collections.IEnumerator DelayedCursorReset()
-    {
-        yield return new WaitForSeconds(0.1f); // Small delay
-        
-        // Double check that we still shouldn't be hovering
-        if (hoverCount == 0)
-        {
-            SetDefaultCursor();
-        }
-        
-        resetCursorCoroutine = null;
+        isCurrentlyHovering = false;
+        SetDefaultCursorInternal();
     }
     
     public void SetHoverCursor()
     {
-        // Cancel any pending cursor reset
-        if (resetCursorCoroutine != null)
+        isCurrentlyHovering = true;
+        SetHoverCursorInternal();
+    }
+    
+    // Internal methods that actually change the cursor
+    private void SetDefaultCursorInternal()
+    {
+        if (defaultCursor != null)
         {
-            StopCoroutine(resetCursorCoroutine);
-            resetCursorCoroutine = null;
+            try
+            {
+                Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            }
         }
-        
-        hoverCount++;
-        
+        else
+        {
+            // Fallback to system default
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    
+    private void SetHoverCursorInternal()
+    {
         if (hoverCursor != null)
         {
             try
@@ -137,7 +184,7 @@ public class CursorManager : MonoBehaviour
             catch (System.Exception e)
             {
                 Debug.LogWarning($"Failed to set click cursor: {e.Message}. Using default instead.");
-                SetDefaultCursor();
+                SetDefaultCursorInternal();
             }
         }
     }
@@ -154,18 +201,20 @@ public class CursorManager : MonoBehaviour
             catch (System.Exception e)
             {
                 Debug.LogWarning($"Failed to set custom cursor: {e.Message}. Using default instead.");
-                SetDefaultCursor();
+                SetDefaultCursorInternal();
             }
         }
     }
     
-    // Reset to default when game object is destroyed
-    private void OnDestroy()
+    private void ResetCursorOnFocusLoss()
     {
-        if (instance == this)
-        {
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        }
+        // Reset hover state when losing focus
+        isCurrentlyHovering = false;
+        
+        if (enableDebugLogging)
+            Debug.Log("ResetCursorOnFocusLoss called");
+        
+        SetDefaultCursorInternal();
     }
     
     // Create a simple hover cursor if none is provided
@@ -203,5 +252,53 @@ public class CursorManager : MonoBehaviour
         
         Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
         Debug.Log("✅ Created simple hover cursor");
+    }
+    
+    // Simplified watchdog system
+    private System.Collections.IEnumerator CursorWatchdog()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(cursorCheckInterval);
+            
+            // Skip checks if application doesn't have focus
+            if (!Application.isFocused)
+                continue;
+                
+            // Force a cursor state check (in case Update missed something)
+            CheckUnityHoverState();
+        }
+    }
+    
+    // Public method to force cursor reset
+    [ContextMenu("Force Reset Cursor")]
+    public void ForceResetCursor()
+    {
+        if (enableDebugLogging)
+            Debug.Log("🔧 Force reset cursor called");
+            
+        isCurrentlyHovering = false;
+        SetDefaultCursorInternal();
+    }
+    
+    // Public method to enable debug logging at runtime
+    public void EnableDebugLogging(bool enable)
+    {
+        enableDebugLogging = enable;
+        Debug.Log($"Cursor debug logging {(enable ? "enabled" : "disabled")}");
+    }
+    
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            // Stop watchdog
+            if (cursorWatchdog != null)
+            {
+                StopCoroutine(cursorWatchdog);
+            }
+            
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
     }
 }
