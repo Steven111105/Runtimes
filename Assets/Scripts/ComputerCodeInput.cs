@@ -10,7 +10,6 @@ public class ComputerCodeInput : MonoBehaviour
     public GameObject screen1GameObject;
     public GameObject screen2GameObject;
 
-
     [Header("Passwords")]
     public string[] passwords = new string[3]; // Array of 3 possible passwords
 
@@ -207,12 +206,13 @@ public class ComputerCodeInput : MonoBehaviour
 
         if (passwordCorrect)
         {
-            ShowFeedback("ACCESS GRANTED!", true);
             hasAccess = true; // Flag to indicate access granted
             switch (correctPassword)
             {
                 case "ANAGRAMS":
                     Debug.Log("Anagrams password ");
+                    ShowFeedback("Code Accepted! Launching ANAGRAMS Protocol.", true);
+                    StartCoroutine(DelayEndingCall("AnagramsEnding"));
                     break;
                 case "RUNTIMES":
                     Debug.Log("Runtimes password ");
@@ -221,8 +221,8 @@ public class ComputerCodeInput : MonoBehaviour
                 case "TERMINUS":
                     Debug.Log("Terminus password ");
                     EndScreenScript.instance.BlockInput();
-                    Debug.Log("input blocked");
-                    EndScreenScript.instance.ShowEndScreen(7); // Show terminus screen
+                    ShowFeedback("Code Accepted! Launching TERMINUS Protocol.", true);
+                    StartCoroutine(DelayEndingCall("TerminusEnding")); // Show terminus screen
                     break;
             }
             Debug.Log("Password correct - access granted!");
@@ -240,10 +240,35 @@ public class ComputerCodeInput : MonoBehaviour
             else
             {
                 Debug.Log("Too Many Attempts Ending");
-                ShowFeedback($"0 attempts left, Neutralizing user", false);
-                EndScreenScript.instance.ShowEndScreen(3); // Show locked screen
+                ShowFeedback($"Device Lock Protocol Initiated", false);
+                EndScreenScript.instance.BlockInput();
+                StartCoroutine(DelayEndingCall("TooManyAttemptsEnding"));
             }
         }
+    }
+
+    private IEnumerator DelayEndingCall(string endingName)
+    {
+        yield return new WaitForSeconds(1f);
+        EndScreenScript.instance.CallAnimation(endingName);
+    }
+
+    public void AnagramsEnding()
+    {
+        Debug.Log("Anagrams Ending called");
+        EndScreenScript.instance.ShowEndScreen(2);
+    }
+
+    public void TooManyAttemptsEnding()
+    {
+        Debug.Log("Too Many Attempts Ending called");
+        EndScreenScript.instance.ShowEndScreen(3);
+    }
+
+    public void TerminusEnding()
+    {
+        Debug.Log("Terminus Ending called");
+        EndScreenScript.instance.ShowEndScreen(7);
     }
 
     private void UpdateDisplay()

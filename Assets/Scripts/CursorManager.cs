@@ -14,6 +14,10 @@ public class CursorManager : MonoBehaviour
     
     public static CursorManager instance;
     
+    // Track how many objects are currently being hovered
+    private int hoverCount = 0;
+    private Coroutine resetCursorCoroutine;
+    
     private void Awake()
     {
         // Singleton pattern
@@ -36,27 +40,70 @@ public class CursorManager : MonoBehaviour
     
     public void SetDefaultCursor()
     {
-        if (defaultCursor != null)
+        // Only set default if no objects are being hovered
+        if (hoverCount <= 0)
         {
-            try
+            if (defaultCursor != null)
             {
-                Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+                try
+                {
+                    Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
+                    Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                }
             }
-            catch (System.Exception e)
+            else
             {
-                Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
+                // Fallback to system default
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             }
         }
-        else
+    }
+    
+    // Call this when an object stops being hovered
+    public void OnHoverExit()
+    {
+        hoverCount--;
+        
+        // Ensure count doesn't go negative
+        if (hoverCount < 0)
+            hoverCount = 0;
+            
+        // Only reset to default if no objects are being hovered
+        if (hoverCount == 0)
         {
-            // Fallback to system default
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            // Add small delay to prevent flickering between overlapping objects
+            resetCursorCoroutine = StartCoroutine(DelayedCursorReset());
         }
+    }
+    
+    private System.Collections.IEnumerator DelayedCursorReset()
+    {
+        yield return new WaitForSeconds(0.1f); // Small delay
+        
+        // Double check that we still shouldn't be hovering
+        if (hoverCount == 0)
+        {
+            SetDefaultCursor();
+        }
+        
+        resetCursorCoroutine = null;
     }
     
     public void SetHoverCursor()
     {
+        // Cancel any pending cursor reset
+        if (resetCursorCoroutine != null)
+        {
+            StopCoroutine(resetCursorCoroutine);
+            resetCursorCoroutine = null;
+        }
+        
+        hoverCount++;
+        
         if (hoverCursor != null)
         {
             try

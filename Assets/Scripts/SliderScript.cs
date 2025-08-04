@@ -30,7 +30,7 @@ public class SliderScript : MonoBehaviour
 
     private IEnumerator SliderAppearTimer()
     {
-        yield return new WaitForSeconds(29f);
+        yield return new WaitForSeconds(19f);
         sliderBG.color = new Color(sliderBG.color.r, sliderBG.color.g, sliderBG.color.b, 0f);
         sliderFill.color = new Color(sliderFill.color.r, sliderFill.color.g, sliderFill.color.b, 0f);
         slider.gameObject.SetActive(true);

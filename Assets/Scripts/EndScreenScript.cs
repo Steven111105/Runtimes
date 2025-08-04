@@ -12,8 +12,11 @@ public class EndScreenScript : MonoBehaviour
     public GameObject blockInputPanel;
     public TMP_Text endScreenLoreText;
     public TMP_Text endingText;
+    public TMP_Text terminusEndingText;
     public Button restartButton;
     Image endScreenBG;
+
+    public GameObject middleScreen;
     private void Awake()
     {
         if (instance == null)
@@ -28,12 +31,47 @@ public class EndScreenScript : MonoBehaviour
         }
     }
 
-
     public void ShowEndScreen(int endingIndex)
     {
         BlockInput();
         gameObject.SetActive(true);
         StartCoroutine(DisplayEndScreen(endingIndex));
+        switch (endingIndex)
+        {
+            case 0:
+                PlayerPrefs.SetInt("TeaTimeEnding", 1);
+                break;
+            case 1:
+                PlayerPrefs.SetInt("SelfDestructEnding", 1);
+                break;
+            case 2:
+                PlayerPrefs.SetInt("WarStarterEnding", 1);
+                break;
+            case 3:
+                PlayerPrefs.SetInt("TooManyAttemptsEnding", 1);
+                break;
+            case 4:
+                PlayerPrefs.SetInt("YouDidNothingEnding", 1);
+                break;
+            case 5:
+                PlayerPrefs.SetInt("RunningAwayEnding", 1);
+                break;
+            case 6:
+                PlayerPrefs.SetInt("PeskyButtonEnding", 1);
+                break;
+            case 7:
+                PlayerPrefs.SetInt("TerminusEnding", 1);
+                break;
+        }
+    }
+
+    public void CallAnimation(string endingName)
+    {
+        foreach (Transform child in middleScreen.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+        middleScreen.GetComponent<Animator>().Play(endingName);
     }
 
     private IEnumerator DisplayEndScreen(int endingIndex)
@@ -53,10 +91,21 @@ public class EndScreenScript : MonoBehaviour
         }
 
         EndScreenData endingData = endingsData[endingIndex];
+        if (endingIndex == 7)
+        {
+            endingData.loreText = System.Text.RegularExpressions.Regex.Unescape(endingData.loreText);
+        }
 
         foreach (char c in endingData.loreText)
         {
-            endScreenLoreText.text += c;
+            if (endingIndex == 7)
+            {
+                terminusEndingText.text += c;
+            }
+            else
+            {
+                endScreenLoreText.text += c;
+            }
             yield return new WaitForSeconds(0.05f);
         }
 

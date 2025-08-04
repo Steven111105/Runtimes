@@ -37,7 +37,7 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
         
         if (!isClicking && CursorManager.instance != null)
         {
-            CursorManager.instance.SetDefaultCursor();
+            CursorManager.instance.OnHoverExit();
         }
     }
     
@@ -79,7 +79,7 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
             else
             {
                 // Not hovering anymore, go back to default
-                CursorManager.instance.SetDefaultCursor();
+                CursorManager.instance.OnHoverExit();
             }
         }
     }
@@ -89,7 +89,7 @@ public class InteractableObject : MonoBehaviour, IPointerEnterHandler, IPointerE
         // Reset cursor when object is disabled
         if (isHovering && CursorManager.instance != null)
         {
-            CursorManager.instance.SetDefaultCursor();
+            CursorManager.instance.OnHoverExit();
         }
         isHovering = false;
         isClicking = false;
