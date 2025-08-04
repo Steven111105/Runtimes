@@ -38,7 +38,15 @@ public class CursorManager : MonoBehaviour
     {
         if (defaultCursor != null)
         {
-            Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+            try
+            {
+                Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"Failed to set default cursor: {e.Message}. Using system default instead.");
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            }
         }
         else
         {
@@ -51,12 +59,18 @@ public class CursorManager : MonoBehaviour
     {
         if (hoverCursor != null)
         {
-            Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
+            try
+            {
+                Cursor.SetCursor(hoverCursor, hoverHotspot, CursorMode.Auto);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"Failed to set hover cursor: {e.Message}. Creating simple cursor instead.");
+                CreateSimpleHoverCursor();
+            }
         }
         else
         {
-            // Use a simple colored cursor as fallback
-            Debug.Log("🖱️ Setting hover cursor (using system default)");
             // Create a simple cursor texture if none provided
             if (Application.isPlaying)
             {
@@ -69,14 +83,33 @@ public class CursorManager : MonoBehaviour
     {
         if (clickCursor != null)
         {
-            Cursor.SetCursor(clickCursor, clickHotspot, CursorMode.Auto);
+            try
+            {
+                Cursor.SetCursor(clickCursor, clickHotspot, CursorMode.Auto);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"Failed to set click cursor: {e.Message}. Using default instead.");
+                SetDefaultCursor();
+            }
         }
     }
     
     // Method to set custom cursor with parameters
     public void SetCustomCursor(Texture2D cursor, Vector2 hotspot)
     {
-        Cursor.SetCursor(cursor, hotspot, CursorMode.Auto);
+        if (cursor != null)
+        {
+            try
+            {
+                Cursor.SetCursor(cursor, hotspot, CursorMode.Auto);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"Failed to set custom cursor: {e.Message}. Using default instead.");
+                SetDefaultCursor();
+            }
+        }
     }
     
     // Reset to default when game object is destroyed

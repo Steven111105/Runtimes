@@ -5,6 +5,7 @@ public class SoundInstance : MonoBehaviour
     public static SoundInstance Instance;
     public AudioSource sfxSource;
     public AudioClip clickSound;
+    public AudioClip clickyButtonSound;
     public AudioClip keyboardClickSound;
     public AudioClip doorLockedSound;
     public AudioClip doorUnlockedSound;
@@ -15,6 +16,7 @@ public class SoundInstance : MonoBehaviour
     public AudioClip keyGetSound;
     public AudioClip meteorHit;
     public AudioClip unscrewBolt;
+    public AudioClip takeItemSound;
     private void Awake()
     {
         if (Instance == null)
@@ -39,6 +41,7 @@ public class SoundInstance : MonoBehaviour
 
     // Optional: Helper methods
     public void PlayClick() => PlaySound(clickSound);
+    public void PlayClickyButton() => PlaySound(clickyButtonSound);
     public void PlayKeyboard() => PlaySound(keyboardClickSound);
     public void PlayDoorLocked() => PlaySound(doorLockedSound);
     public void PlayDoorUnlocked() => PlaySound(doorUnlockedSound);
@@ -49,4 +52,5 @@ public class SoundInstance : MonoBehaviour
     public void PlayGetKey() => PlaySound(keyGetSound);
     public void PlayMeteor() => PlaySound(meteorHit);
     public void PlayUnscrew() => PlaySound(unscrewBolt);
+    public void PlayTakeItem() => PlaySound(takeItemSound);
 }

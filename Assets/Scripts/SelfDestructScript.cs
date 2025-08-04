@@ -27,7 +27,7 @@ public class SelfDestructScript : MonoBehaviour
     {
         if (isSelfDestructing) return; // Prevent further presses if self-destruct is already initiated
         SliderScript.instance.CancelSlider();
-        SoundInstance.Instance.PlayClick(); // Play button press sound
+        SoundInstance.Instance.PlayClickyButton(); // Play button press sound
         amountPressed++;
         if (amountPressed >= 5)
         {

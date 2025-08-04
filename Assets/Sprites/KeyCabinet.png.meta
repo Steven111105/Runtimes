@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ceec504f55301914ebaa95daf9cc284f
+guid: db1bea2961f9d1a488aaeeab6273b651
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,7 +121,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: KeyCabinet_1
+      rect:
+        serializedVersion: 2
+        x: 1899
+        y: 942
+        width: 293
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fae55ece73a67a468f84d6315e8e181
+      internalID: 1030149601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyCabinet_2
+      rect:
+        serializedVersion: 2
+        x: 2246
+        y: 991
+        width: 35
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f6e8f4b041c27048ab9c4fe06fb57a5
+      internalID: 1638716460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +174,41 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      KeyCabinet_0: 1409358047
+      KeyCabinet_1: 1030149601
+      KeyCabinet_10: -653061713
+      KeyCabinet_11: 1070970464
+      KeyCabinet_12: 1998234825
+      KeyCabinet_13: 153739931
+      KeyCabinet_14: 543241052
+      KeyCabinet_15: 1343887001
+      KeyCabinet_16: -708751432
+      KeyCabinet_17: -1702639102
+      KeyCabinet_18: 802996722
+      KeyCabinet_19: -1587904009
+      KeyCabinet_2: 1638716460
+      KeyCabinet_20: 606415133
+      KeyCabinet_21: -802276421
+      KeyCabinet_22: -1610677237
+      KeyCabinet_23: -1680507883
+      KeyCabinet_24: 1494976188
+      KeyCabinet_25: -1121019854
+      KeyCabinet_26: -948939979
+      KeyCabinet_27: -948800391
+      KeyCabinet_28: -1629992861
+      KeyCabinet_29: -421158853
+      KeyCabinet_3: 1283073437
+      KeyCabinet_30: 1504029574
+      KeyCabinet_31: 2079596231
+      KeyCabinet_32: -1733563024
+      KeyCabinet_33: -824688271
+      KeyCabinet_4: 581579223
+      KeyCabinet_5: -1112239897
+      KeyCabinet_6: -1203275748
+      KeyCabinet_7: -747768614
+      KeyCabinet_8: 527782453
+      KeyCabinet_9: 79591587
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

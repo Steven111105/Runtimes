@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ceec504f55301914ebaa95daf9cc284f
+guid: 9c955cd64071fc54eaeb9eaf1e6c2f84
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Right_2
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 20
+        width: 1340
+        height: 476
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a79f6f67aae02c4aa26a0271d85ba6d
+      internalID: -1169980920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_7
+      rect:
+        serializedVersion: 2
+        x: 2005
+        y: 236
+        width: 139
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b29cb178c120a3f418d73526e209b2fa
+      internalID: -1937018576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +174,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Right_0: -1529053972
+      Right_1: 608131746
+      Right_2: -1169980920
+      Right_3: -1013337873
+      Right_4: -1169313414
+      Right_5: 982450980
+      Right_6: 1120069350
+      Right_7: -1937018576
+      Right_8: -1816674869
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

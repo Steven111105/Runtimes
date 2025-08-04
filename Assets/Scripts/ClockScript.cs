@@ -54,6 +54,7 @@ public class ClockScript : MonoBehaviour
     public void TakeUVFlashlight()
     {
         UVLightMaskScript.instance.hasFlashlightUnlocked = true; // Set the UV light mask script to indicate the UV light has been taken
+        SoundInstance.Instance.PlayTakeItem(); // Play the sound for taking an item
         uvFlashLight.SetActive(false); // Hide the UV light GameObject
     }
 }

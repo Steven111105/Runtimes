@@ -36,6 +36,7 @@ public class TableAndScrewdriverScript : MonoBehaviour
     public void TakeScrewdriver()
     {
         hasScrewdriver = true; // Set the flag to indicate the screwdriver has been taken
+        SoundInstance.Instance.PlayTakeItem(); // Play the sound for taking an item
         screwdriver.SetActive(false); // Hide the screwdriver GameObject
         Debug.Log("Screwdriver taken!");
         // Optionally, you can add logic to update the UI or notify other scripts
