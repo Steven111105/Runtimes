@@ -28,6 +28,7 @@ public class TableAndScrewdriverScript : MonoBehaviour
     public void DrawerClicked()
     {
         drawer.SetActive(false); // Hide the drawer when clicked
+        SoundInstance.Instance.PlayDrawer(); // Play the drawer opening sound
         screwdriver.SetActive(true);
         GetComponent<Image>().sprite = openDrawerSprite; // Change the sprite to the open drawer sprite
     }

@@ -783,7 +783,7 @@ MonoBehaviour:
   endingsData:
   - loreText: Hmm.. I wonder what's in that tea
     endingText: '[T]ea Time'
-  - loreText: You Couldn't resist, could you?
+  - loreText: You couldn't resist, could you?
     endingText: S[e]lf Destruct
   - loreText: Well... World peace was overatted anyway.
     endingText: Wa[r] Starter
@@ -4091,11 +4091,11 @@ RectTransform:
   m_LocalScale: {x: 1.0000799, y: 1.0000799, z: 1.0000799}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 901387308}
+  m_Father: {fileID: 741180936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1010, y: 0}
+  m_AnchoredPosition: {x: 910.0001, y: 0}
   m_SizeDelta: {x: 100, y: 756.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &678794610
@@ -5013,6 +5013,7 @@ RectTransform:
   - {fileID: 1778367388}
   - {fileID: 728192099}
   - {fileID: 422023149}
+  - {fileID: 678794609}
   m_Father: {fileID: 901387308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5854,7 +5855,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 741180936}
-  - {fileID: 678794609}
   - {fileID: 1215986662}
   - {fileID: 1009480378}
   m_Father: {fileID: 2133686270}
@@ -6641,6 +6641,7 @@ MonoBehaviour:
   pouringSound: {fileID: 8300000, guid: 05bab1dfd93f0f34e9d5206a09e4f2cd, type: 3}
   keyGetSound: {fileID: 8300000, guid: 6cde7c049e2e9d34b9fd68cea2ed6a85, type: 3}
   meteorHit: {fileID: 8300000, guid: 88c431505f6036f45ae8c413e98156df, type: 3}
+  unscrewBolt: {fileID: 8300000, guid: 576eea8fbf8dd204592e921f43176497, type: 3}
 --- !u!4 &957154745
 Transform:
   m_ObjectHideFlags: 0
@@ -10677,13 +10678,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849701982}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.33914846, w: 0.9407329}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1947990856}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.65}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -590.6, y: -317.7}

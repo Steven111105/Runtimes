@@ -49,6 +49,7 @@ public class ComputerScreenClick : MonoBehaviour
     {
         if (buttonClickedAmount < 8)
         {
+            SoundInstance.Instance.PlayClick(); // Play click sound
             Debug.Log("Spelling anagram");
             if (buttonClickedAmount == 0)
             {
@@ -63,6 +64,7 @@ public class ComputerScreenClick : MonoBehaviour
         else if (buttonClickedAmount == 8)
         {
             Debug.Log("Done spelling anagram");
+            SoundInstance.Instance.PlayClick(); // Play click sound
             buttonText.text = "!";
             computerButton.transform.localPosition = keyboardPositions[8];
         }

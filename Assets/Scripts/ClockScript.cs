@@ -28,6 +28,7 @@ public class ClockScript : MonoBehaviour
         {
             screws[index].SetActive(false); // Hide the screw GameObject
             isUnscrewed[index] = true;
+            SoundInstance.Instance.PlayUnscrew(); // Play the unscrewing sound
         }
 
         if (AllScrewsUnscrewed())
