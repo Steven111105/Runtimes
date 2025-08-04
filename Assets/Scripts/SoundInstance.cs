@@ -14,6 +14,7 @@ public class SoundInstance : MonoBehaviour
     public AudioClip pouringSound;
     public AudioClip keyGetSound;
     public AudioClip meteorHit;
+    public AudioClip unscrewBolt;
     private void Awake()
     {
         if (Instance == null)
@@ -47,4 +48,5 @@ public class SoundInstance : MonoBehaviour
     public void PlayPouring() => PlaySound(pouringSound);
     public void PlayGetKey() => PlaySound(keyGetSound);
     public void PlayMeteor() => PlaySound(meteorHit);
+    public void PlayUnscrew() => PlaySound(unscrewBolt);
 }

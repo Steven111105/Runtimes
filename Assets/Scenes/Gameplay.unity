@@ -6641,6 +6641,7 @@ MonoBehaviour:
   pouringSound: {fileID: 8300000, guid: 05bab1dfd93f0f34e9d5206a09e4f2cd, type: 3}
   keyGetSound: {fileID: 8300000, guid: 6cde7c049e2e9d34b9fd68cea2ed6a85, type: 3}
   meteorHit: {fileID: 8300000, guid: 88c431505f6036f45ae8c413e98156df, type: 3}
+  unscrewBolt: {fileID: 8300000, guid: 576eea8fbf8dd204592e921f43176497, type: 3}
 --- !u!4 &957154745
 Transform:
   m_ObjectHideFlags: 0
