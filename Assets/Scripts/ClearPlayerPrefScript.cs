@@ -14,7 +14,7 @@ public class ClearPlayerPrefScript : MonoBehaviour
     void Update()
     {
         
-        if(Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.X) && Input.GetKey(KeyCode.C))
+        if(Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.X))
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
